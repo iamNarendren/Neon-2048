@@ -1,7 +1,8 @@
-# 🎮 Neon 2048
+
+# 🎮 2048: Block Adventure
 ### Beyond Numbers — A Neon-Powered Puzzle Adventure
 
-An interactive 2048 puzzle game built with Python and Pygame, featuring a neon visual theme, evolving robot characters, smooth tile animations, multiple game modes, and score tracking.
+An interactive 2048 puzzle game built with Python and Pygame, featuring a neon visual theme, evolving robot characters, smooth tile animations, multiple game modes, an AI move helper, and local score tracking.
 
 ## 🌐 Play Online
 
@@ -29,48 +30,49 @@ The project also demonstrates computational thinking concepts such as decomposit
 
 - **Neon Interface:** A dark background with colourful tiles and glowing visual effects.
 - **Animated Tile Movement:** Smooth transitions when tiles move and merge.
-- **Evolving Robot Characters:** Robot designs that change as tile values increase.
-- **Score Tracking:** Current score, best score, and useful game statistics.
-- **Undo and Restart:** Retry moves or start a new game.
-- **Multiple Game Modes:** Classic, Zen, Time Attack, Puzzle, and local 1v1, subject to the implemented version.
-- **Achievements and Challenges:** Additional goals to encourage replayability.
-- **Hints:** Assistance with choosing a possible move.
-- **Themes and Sound:** Customisation options for colours and optional sound effects.
-- **Leaderboard and Records:** Track scores and player progress where supported.
+- **Evolving Robot Companion:** A robot whose colour changes as the score increases.
+- **AI Move Helper:** Click the robot three times to activate a helper that evaluates possible moves and selects a useful move.
+- **Score Tracking:** Current score and best score.
+- **Multiple Game Modes:** Classic, Survival, and Infection.
+- **Survival Challenge:** A 60-second mode with temporary blocked rows or columns. During a 3-second block, tiles in the blocked row or column are frozen and cannot move or merge, and new tiles cannot spawn in blocked cells.
+- **Infection Challenge:** Infection spreads to neighboring occupied tiles after every three successful moves. Infected tiles merging with infected tiles are cured; merging an infected tile with a normal tile keeps the merged tile infected.
+- **Achievements and Milestones:** Additional goals and score milestones to encourage replayability.
+- **Sound and Animations:** Game sounds and visual effects for moves, merges, spawning, and important game events.
+- **Local Leaderboards:** Separate on-device top-10 score records for Classic, Survival, and Infection.
 
-*Features listed above describe the project goals. The final implementation may vary; see the actual game for available features.*
+*Features listed above describe the project pseudocode and goals. The final implementation may vary; see the actual game for available features.*
 
 ## 🧠 How the Game Works
 
 1. The game starts with a grid containing numbered tiles.
 2. The player moves tiles using the supported controls.
 3. Tiles with matching values merge into a tile with their combined value.
-4. A new tile appears after a valid move.
+4. A new tile appears after a valid move: usually a 2, with a smaller chance of a 4.
 5. The score increases when tiles merge.
-6. The game continues until the target tile is reached or no valid moves remain.
+6. The game continues until the target tile is reached, no valid moves remain, the Survival timer expires, or all occupied tiles become infected in Infection mode.
 
 The implementation must ensure that each tile merges at most once per move and that invalid moves do not create extra tiles.
 
 ## 🧩 Computational Thinking Concepts
 
 ### 1. Decomposition
-The project can be divided into separate components, such as the game board, tile movement, scoring, rendering, animation, and game modes.
+The project can be divided into separate components, such as the game board, tile movement, scoring, rendering, animation, robot companion, AI move helper, and game modes.
 
 ### 2. Pattern Recognition
-The game identifies matching tile values and possible moves on the grid.
+The game identifies matching tile values, possible merges, available moves, and neighboring occupied tiles for Infection mode.
 
 ### 3. Abstraction
 The board can be represented as a two-dimensional data structure, while rendering and animations are handled separately.
 
 ### 4. Algorithm Design
-Movement, merging, random tile generation, scoring, and game-over detection follow defined rules.
+Movement, merging, random tile generation, scoring, infection spread, temporary blocking, and game-over detection follow defined rules.
 
 ### 5. State Management
-The game maintains information such as the board, score, current mode, undo history, and saved records.
+The game maintains information such as the board, score, current mode, move count, infection state, Survival timer and block state, achievements, and saved local records.
 
 ## 🔄 Game Logic Workflow
 
-Player Input → Validate Move → Slide Tiles → Merge Matching Tiles → Update Score → Spawn New Tile → Check Win/Game Over → Render Updated Board
+Player Input → Validate Move → Slide Tiles → Merge Matching Tiles → Update Score → Spawn New Tile → Update Selected Mode → Check Win/Game Over → Render Updated Board
 
 ## 🧰 Technology Stack
 
@@ -78,8 +80,8 @@ Player Input → Validate Move → Slide Tiles → Merge Matching Tiles → Upda
 |---|---|
 | Python | Core game logic and application code |
 | Pygame | Game window, graphics, input handling, and animations |
-| Python data structures | Board representation, scoring, and game state |
-| JSON or another suitable storage method, if implemented | Saved scores, settings, and progress |
+| Python data structures | Board representation, scoring, game state, and infection tracking |
+| JSON or another suitable storage method, if implemented | Local leaderboards and saved game information |
 
 ## 💻 Run Locally
 
@@ -150,16 +152,19 @@ Important tests include:
 - No double merging of the same tile in one move.
 - No new tile after an invalid move.
 - Correct win and game-over detection.
-- Undo and restart behaviour.
-- Game-mode rules and timer behaviour.
-- Saving and restoring scores or settings, where implemented.
+- Restart behaviour.
+- Classic, Survival, and Infection mode rules.
+- Survival timer and temporary blocked-row or blocked-column behaviour, including frozen tiles.
+- Infection spread after every three successful moves and infection status after merges.
+- Robot colour changes and AI helper move selection.
+- Saving and restoring local score records, where implemented.
 
 ## 📌 Project Scope and Limitations
 
 - The initial implementation is a desktop game using Python and Pygame.
 - Online play requires a browser-compatible implementation or an appropriate adaptation.
-- A local leaderboard does not automatically provide a shared online ranking system.
-- Daily challenges and online rankings may require additional data storage or backend services if they are to be shared between users.
+- The leaderboards are stored locally on the device and do not automatically provide shared online rankings.
+- The AI helper selects a useful move based on board evaluation; it does not guarantee a win.
 - The available features depend on the final tested implementation.
 
 ## 🎓 Academic Information
